@@ -72,9 +72,9 @@ class MailQueue extends Mailer
 	
 	
 	/**
-	 * @var boolean Purges messages from queue after sending
+	 * @var boolean Purges messages from queue after sending, if you consider keep the queue just setting in false
 	 */
-	public $autoPurge = true;
+	public $autoPurge = false;
 
 	/**
 	 * Initializes the MailQueue component.

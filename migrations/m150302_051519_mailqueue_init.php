@@ -2,12 +2,10 @@
 
 use yii\db\Schema;
 use yii\db\Migration;
-use nterms\mailqueue\MailQueue;
+use atsys\mailqueue\MailQueue;
 
 /**
  * Initializes the db table for MailQueue
- *
- * @author Saranga Abeykoon <amisaranga@gmail.com>
  */
 class m150302_051519_mailqueue_init extends Migration
 {

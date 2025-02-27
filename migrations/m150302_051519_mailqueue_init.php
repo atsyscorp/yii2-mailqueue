@@ -2,7 +2,7 @@
 
 use yii\db\Schema;
 use yii\db\Migration;
-use atsys\mailqueue\MailQueue;
+use atsyscorp\mailqueue\MailQueue;
 
 /**
  * Initializes the db table for MailQueue

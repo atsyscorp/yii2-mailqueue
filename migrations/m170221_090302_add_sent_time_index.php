@@ -1,6 +1,6 @@
 <?php
 use yii\db\Migration;
-use atsys\mailqueue\MailQueue;
+use atsyscorp\mailqueue\MailQueue;
 class m170221_090302_add_sent_time_index extends Migration
 {
     public function up()

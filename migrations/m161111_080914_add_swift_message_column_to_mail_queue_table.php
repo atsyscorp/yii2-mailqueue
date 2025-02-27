@@ -1,7 +1,7 @@
 <?php
 
 use yii\db\Migration;
-use atsys\mailqueue\MailQueue;
+use atsyscorp\mailqueue\MailQueue;
 
 /**
  * Handles adding mailer_message to table `mail_queue`.

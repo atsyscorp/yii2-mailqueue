@@ -1,11 +1,11 @@
 <?php
 
-namespace atsys\mailqueue\models;
+namespace atsyscorp\mailqueue\models;
 
 use Yii;
 use yii\db\ActiveRecord;
-use atsys\mailqueue\MailQueue;
-use atsys\mailqueue\Message;
+use atsyscorp\mailqueue\MailQueue;
+use atsyscorp\mailqueue\Message;
 
 /**
  * This is the model class for table "{{%mail_queue}}".

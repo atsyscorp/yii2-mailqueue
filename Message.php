@@ -2,13 +2,13 @@
 
 /**
  * Message.php
- * @author ATSYS https://atsys.co
+ * @author ATSYS https://atsyscorp.co
  */
 
-namespace atsys\mailqueue;
+namespace atsyscorp\mailqueue;
 
 use Yii;
-use atsys\mailqueue\models\Queue;
+use atsyscorp\mailqueue\models\Queue;
 
 /**
  * Extends `yii\symfonymailer\Message` to enable queuing.

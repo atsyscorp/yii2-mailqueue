@@ -12,13 +12,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist atsys/yii2-mailqueue "*"
+php composer.phar require --prefer-dist atsyscorp/yii2-mailqueue "*"
 ```
 
 or add
 
 ```
-"atsys/yii2-mailqueue": "*"
+"atsyscorp/yii2-mailqueue": "*"
 ```
 
 to the require section of your `composer.json` file.
@@ -33,7 +33,7 @@ return [
     //....
     'components' => [
         'mailqueue' => [
-            'class' => 'atsys\mailqueue\MailQueue',
+            'class' => 'atsyscorp\mailqueue\MailQueue',
 			'table' => '{{%mail_queue}}',
 			'mailsPerRound' => 10,
 			'maxAttempts' => 3,
@@ -60,7 +60,7 @@ return [
     //....
     'components' => [
         'mailqueue' => [
-            'class' => 'atsys\mailqueue\MailQueue',
+            'class' => 'atsyscorp\mailqueue\MailQueue',
 			'table' => '{{%mail_queue}}',
         ],
     ],
@@ -70,7 +70,7 @@ return [
 then run `yii migrate` command in command line:
 
 ```
-php yii migrate/up --migrationPath=@vendor/atsys/yii2-mailqueue/migrations/
+php yii migrate/up --migrationPath=@vendor/atsyscorp/yii2-mailqueue/migrations/
 ```
 
 Processing the mail queue
@@ -117,7 +117,7 @@ Yii::$app->mailqueue->compose('contact/html')
      ->queue();
 ```
 
-While `atsys\mailqueue\MailQueue` extends from `yii\symfonymailer\Mailer`, you can replace it with this extension by adding 
+While `atsyscorp\mailqueue\MailQueue` extends from `yii\symfonymailer\Mailer`, you can replace it with this extension by adding 
 `yii2-symfonymailer` configuations directly to `mailqueue` configurations as follows:
 
 ```php
@@ -125,7 +125,7 @@ return [
     //....
     'components' => [
         'mailqueue' => [
-            'class' => 'atsys\mailqueue\MailQueue',
+            'class' => 'atsyscorp\mailqueue\MailQueue',
 			'table' => '{{%mail_queue}}',
 			'mailsPerRound' => 10,
 			'maxAttempts' => 3,

@@ -2,15 +2,15 @@
 
 /**
  * MailQueue.php
- * @author Saranga Abeykoon http://atsys.com
+ * @author Saranga Abeykoon http://atsyscorp.com
  */
 
-namespace atsys\mailqueue;
+namespace atsyscorp\mailqueue;
 
 use Yii;
 use yii\symfonymailer\Mailer;
-use atsys\mailqueue\Message;
-use atsys\mailqueue\models\Queue;
+use atsyscorp\mailqueue\Message;
+use atsyscorp\mailqueue\models\Queue;
 
 /**
  * MailQueue is a sub class of [yii\switmailer\Mailer](https://www.yiiframework.com/extension/yiisoft/yii2-symfonymailer)
@@ -20,7 +20,7 @@ use atsys\mailqueue\models\Queue;
  * 	'components' => [
  * 		...
  * 		'mailqueue' => [
- * 			'class' => 'atsys\mailqueue\MailQueue',
+ * 			'class' => 'atsyscorp\mailqueue\MailQueue',
  *			'table' => '{{%mail_queue}}',
  *			'mailsPerRound' => 10,
  *			'maxAttempts' => 3,
@@ -42,7 +42,7 @@ use atsys\mailqueue\models\Queue;
  *
  * @see https://www.yiiframework.com/extension/yiisoft/yii2-symfonymailer
  *
- * This extension replaces `yii\switmailer\Message` with `atsys\mailqueue\Message'
+ * This extension replaces `yii\switmailer\Message` with `atsyscorp\mailqueue\Message'
  * to enable queuing right from the message.
  *
  */
@@ -53,7 +53,7 @@ class MailQueue extends Mailer
 	/**
 	 * @var string message default class name.
 	 */
-	public $messageClass = 'atsys\mailqueue\Message';
+	public $messageClass = 'atsyscorp\mailqueue\Message';
 
 	/**
 	 * @var string the name of the database table to store the mail queue.

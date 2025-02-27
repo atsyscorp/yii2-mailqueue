@@ -4,7 +4,7 @@
  * Mail Command Controller
  */
 
-namespace atsys\mailqueue\commands;
+namespace atsyscorp\mailqueue\commands;
 
 use yii\console\Controller;
 

@@ -1,15 +1,15 @@
 {
-	"name": "atsys/yii2-mailqueue",
+	"name": "atsyscorp/yii2-mailqueue",
 	"description": "Email queue component for yii2. Created by Saranga Abeykoon, updated by ATSYS",
 	"keywords": ["yii2", "extension", "component", "email", "queue", "symfonymailer", "yii2-symfonymailer"],
-	"homepage": "https://github.com/atsyscorp/yii2-mailqueue",
+	"homepage": "https://github.com/atsyscorpcorp/yii2-mailqueue",
 	"type": "yii2-extension",
 	"license": "MIT",
 	"authors": [
 		{
 			"name": "ATSYS",
 			"email": "arkitechsystems@gmail.com",
-			"homepage": "https://atsys.co/"
+			"homepage": "https://atsyscorp.co/"
 		}
 	],
 	"require": {
@@ -18,10 +18,10 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"atsys\\mailqueue\\": ""
+			"atsyscorp\\mailqueue\\": ""
 		}
 	},
         "extra": {
-            "bootstrap": "atsys\\mailqueue\\Bootstrap"            
+            "bootstrap": "atsyscorp\\mailqueue\\Bootstrap"            
         }
 }

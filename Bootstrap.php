@@ -5,7 +5,7 @@
  * @author ATSYS <arkitechsystems@gmail.com>
  */
 
-namespace atsys\mailqueue;
+namespace atsyscorp\mailqueue;
 
 use yii\base\Application;
 use yii\base\BootstrapInterface;
@@ -14,7 +14,7 @@ use yii\base\BootstrapInterface;
 /**
  * Class Bootstrap
  * 
- * @package atsys\mailqueue;
+ * @package atsyscorp\mailqueue;
  * @author ATSYS <arkitechsystems@gmail.com>
  */
 class Bootstrap implements BootstrapInterface
@@ -30,7 +30,7 @@ class Bootstrap implements BootstrapInterface
     {
       
         if ($app instanceof \yii\console\Application) {
-            $app->controllerMap['mailqueue'] = 'atsys\mailqueue\commands\MailQueueController';
+            $app->controllerMap['mailqueue'] = 'atsyscorp\mailqueue\commands\MailQueueController';
         }
         
     }

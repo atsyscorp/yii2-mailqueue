@@ -1,19 +1,19 @@
 <?php
 
 use yii\db\Migration;
-use nterms\mailqueue\MailQueue;
+use atsys\mailqueue\MailQueue;
 
 /**
- * Handles adding swift_message to table `mail_queue`.
+ * Handles adding mailer_message to table `mail_queue`.
  */
-class m161111_080914_add_swift_message_column_to_mail_queue_table extends Migration
+class m161111_080914_add_mailer_message_column_to_mail_queue_table extends Migration
 {
     /**
      * @inheritdoc
      */
     public function up()
     {
-        $this->addColumn(Yii::$app->get(MailQueue::NAME)->table, 'swift_message', 'text');
+        $this->addColumn(Yii::$app->get(MailQueue::NAME)->table, 'mailer_message', 'text');
     }
 
     /**
@@ -21,6 +21,6 @@ class m161111_080914_add_swift_message_column_to_mail_queue_table extends Migrat
      */
     public function down()
     {
-        $this->dropColumn(Yii::$app->get(MailQueue::NAME)->table, 'swift_message');
+        $this->dropColumn(Yii::$app->get(MailQueue::NAME)->table, 'mailer_message');
     }
 }

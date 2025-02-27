@@ -1,10 +1,10 @@
 <?php
 
 use yii\db\Migration;
-use nterms\mailqueue\MailQueue;
+use atsys\mailqueue\MailQueue;
 
 /**
- * Handles adding swift_message to table `mail_queue`.
+ * Handles adding mailer_message to table `mail_queue`.
  */
 class m170217_124201_drop_obsolete_columns_from_mail_queue_table extends Migration
 {

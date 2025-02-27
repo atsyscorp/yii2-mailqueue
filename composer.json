@@ -1,7 +1,7 @@
 {
 	"name": "atsys/yii2-mailqueue",
 	"description": "Email queue component for yii2. Created by Saranga Abeykoon, updated by ATSYS",
-	"keywords": ["yii2", "extension", "component", "email", "queue", "swiftmailer", "yii2-swiftmailer"],
+	"keywords": ["yii2", "extension", "component", "email", "queue", "symfonymailer", "yii2-symfonymailer"],
 	"homepage": "https://github.com/atsyscorp/yii2-mailqueue",
 	"type": "yii2-extension",
 	"license": "MIT",

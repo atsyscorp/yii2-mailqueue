@@ -1,7 +1,7 @@
 yii2-mailqueue
 ==============
 
-Email queue component for yii2 that works with [yii2-swiftmailer](http://www.yiiframework.com/doc-2.0/ext-swiftmailer-index.html)
+Email queue component for yii2 that works with [yii2-symfonymailer](https://www.yiiframework.com/extension/yiisoft/yii2-symfonymailer)
 
 
 Installation
@@ -12,13 +12,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist nterms/yii2-mailqueue "*"
+php composer.phar require --prefer-dist atsys/yii2-mailqueue "*"
 ```
 
 or add
 
 ```
-"nterms/yii2-mailqueue": "*"
+"atsys/yii2-mailqueue": "*"
 ```
 
 to the require section of your `composer.json` file.
@@ -33,7 +33,7 @@ return [
     //....
     'components' => [
         'mailqueue' => [
-            'class' => 'nterms\mailqueue\MailQueue',
+            'class' => 'atsys\mailqueue\MailQueue',
 			'table' => '{{%mail_queue}}',
 			'mailsPerRound' => 10,
 			'maxAttempts' => 3,
@@ -60,7 +60,7 @@ return [
     //....
     'components' => [
         'mailqueue' => [
-            'class' => 'nterms\mailqueue\MailQueue',
+            'class' => 'atsys\mailqueue\MailQueue',
 			'table' => '{{%mail_queue}}',
         ],
     ],
@@ -70,7 +70,7 @@ return [
 then run `yii migrate` command in command line:
 
 ```
-php yii migrate/up --migrationPath=@vendor/nterms/yii2-mailqueue/migrations/
+php yii migrate/up --migrationPath=@vendor/atsys/yii2-mailqueue/migrations/
 ```
 
 Processing the mail queue
@@ -117,15 +117,15 @@ Yii::$app->mailqueue->compose('contact/html')
      ->queue();
 ```
 
-While `nterms\mailqueue\MailQueue` extends from `yii\swiftmailer\Mailer`, you can replace it with this extension by adding 
-`yii2-swiftmailer` configuations directly to `mailqueue` configurations as follows:
+While `atsys\mailqueue\MailQueue` extends from `yii\symfonymailer\Mailer`, you can replace it with this extension by adding 
+`yii2-symfonymailer` configuations directly to `mailqueue` configurations as follows:
 
 ```php
 return [
     //....
     'components' => [
         'mailqueue' => [
-            'class' => 'nterms\mailqueue\MailQueue',
+            'class' => 'atsys\mailqueue\MailQueue',
 			'table' => '{{%mail_queue}}',
 			'mailsPerRound' => 10,
 			'maxAttempts' => 3,
@@ -142,7 +142,7 @@ return [
 ];
 ```
 
-And use following code for directly sending emails as you ususally do with `yii2-swiftmailer`:
+And use following code for directly sending emails as you ususally do with `yii2-symfonymailer`:
 
 ```php
 Yii::$app->mailqueue->compose('contact/html')

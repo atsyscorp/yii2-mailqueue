@@ -1,12 +1,11 @@
 <?php
 /**
-/**
  * Mail Command Controller
  * 
- * @author Rochdi B. <rochdi80tn@gmail.com>
+ * @author ATSYS <arkitechsystems@gmail.com>
  */
 
-namespace nterms\mailqueue;
+namespace atsys\mailqueue;
 
 use yii\base\Application;
 use yii\base\BootstrapInterface;
@@ -15,8 +14,8 @@ use yii\base\BootstrapInterface;
 /**
  * Class Bootstrap
  * 
- * @package nterms\mailqueue;
- * @author Rochdi B. <rochdi80tn@gmail.com>
+ * @package atsys\mailqueue;
+ * @author ATSYS <arkitechsystems@gmail.com>
  */
 class Bootstrap implements BootstrapInterface
 {
@@ -31,7 +30,7 @@ class Bootstrap implements BootstrapInterface
     {
       
         if ($app instanceof \yii\console\Application) {
-            $app->controllerMap['mailqueue'] = 'nterms\mailqueue\commands\MailQueueController';
+            $app->controllerMap['mailqueue'] = 'atsys\mailqueue\commands\MailQueueController';
         }
         
     }

@@ -2,20 +2,20 @@
 
 /**
  * Message.php
- * @author Saranga Abeykoon http://nterms.com
+ * @author ATSYS https://atsys.co
  */
 
-namespace nterms\mailqueue;
+namespace atsys\mailqueue;
 
 use Yii;
-use nterms\mailqueue\models\Queue;
+use atsys\mailqueue\models\Queue;
 
 /**
- * Extends `yii\swiftmailer\Message` to enable queuing.
+ * Extends `yii\symfonymailer\Message` to enable queuing.
  *
- * @see http://www.yiiframework.com/doc-2.0/yii-swiftmailer-message.html
+ * @see https://www.yiiframework.com/extension/yiisoft/yii2-symfonymailer
  */
-class Message extends \yii\swiftmailer\Message
+class Message extends \yii\symfonymailer\Message
 {
     /**
      * Enqueue the message storing it in database.
@@ -30,11 +30,10 @@ class Message extends \yii\swiftmailer\Message
         }
 
         $item = new Queue();
-
-        $item->subject = $this->getSubject();
-        $item->attempts = 0;
-        $item->swift_message = base64_encode(serialize($this));
-        $item->time_to_send = date('Y-m-d H:i:s', $time_to_send);
+        $item->subject          = $this->getSubject();
+        $item->attempts         = 0;
+        $item->mailer_message   = base64_encode(serialize($this));
+        $item->time_to_send     = date('Y-m-d H:i:s', $time_to_send);
 
         return $item->save();
     }

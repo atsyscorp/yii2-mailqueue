@@ -2,47 +2,47 @@
 
 /**
  * MailQueue.php
- * @author Saranga Abeykoon http://nterms.com
+ * @author Saranga Abeykoon http://atsys.com
  */
 
-namespace nterms\mailqueue;
+namespace atsys\mailqueue;
 
 use Yii;
-use yii\swiftmailer\Mailer;
-use nterms\mailqueue\Message;
-use nterms\mailqueue\models\Queue;
+use yii\symfonymailer\Mailer;
+use atsys\mailqueue\Message;
+use atsys\mailqueue\models\Queue;
 
 /**
- * MailQueue is a sub class of [yii\switmailer\Mailer](https://github.com/yiisoft/yii2-swiftmailer/blob/master/Mailer.php)
- * which intends to replace it.
- *
- * Configuration is the same as in `yii\switmailer\Mailer` with some additional properties to control the mail queue
+ * MailQueue is a sub class of [yii\switmailer\Mailer](https://www.yiiframework.com/extension/yiisoft/yii2-symfonymailer)
+ * which intends to replace it using now Symfonymailer.
  *
  * ~~~
  * 	'components' => [
  * 		...
  * 		'mailqueue' => [
- * 			'class' => 'nterms\mailqueue\MailQueue',
+ * 			'class' => 'atsys\mailqueue\MailQueue',
  *			'table' => '{{%mail_queue}}',
  *			'mailsPerRound' => 10,
  *			'maxAttempts' => 3,
  * 			'transport' => [
- * 				'class' => 'Swift_SmtpTransport',
+ * 				'scheme' => 'smtp',
  * 				'host' => 'localhost',
  * 				'username' => 'username',
  * 				'password' => 'password',
  * 				'port' => '587',
  * 				'encryption' => 'tls',
  * 			],
+ * 			'options' => [
+ * 				'verify_peer' => 0,
+ * 			],
  * 		],
  * 		...
  * 	],
  * ~~~
  *
- * @see http://www.yiiframework.com/doc-2.0/yii-swiftmailer-mailer.html
- * @see http://www.yiiframework.com/doc-2.0/ext-swiftmailer-index.html
+ * @see https://www.yiiframework.com/extension/yiisoft/yii2-symfonymailer
  *
- * This extension replaces `yii\switmailer\Message` with `nterms\mailqueue\Message'
+ * This extension replaces `yii\switmailer\Message` with `atsys\mailqueue\Message'
  * to enable queuing right from the message.
  *
  */
@@ -53,7 +53,7 @@ class MailQueue extends Mailer
 	/**
 	 * @var string message default class name.
 	 */
-	public $messageClass = 'nterms\mailqueue\Message';
+	public $messageClass = 'atsys\mailqueue\Message';
 
 	/**
 	 * @var string the name of the database table to store the mail queue.
@@ -100,18 +100,18 @@ class MailQueue extends Mailer
 		$items = Queue::find()->where(['and', ['sent_time' => NULL], ['<', 'attempts', $this->maxAttempts], ['<=', 'time_to_send', date('Y-m-d H:i:s')]])->orderBy(['created_at' => SORT_ASC])->limit($this->mailsPerRound);
 		foreach ($items->each() as $item) {
 		    if ($message = $item->toMessage()) {
-			$attributes = ['attempts', 'last_attempt_time'];
-			if ($this->send($message)) {
-			    $item->sent_time = new \yii\db\Expression('NOW()');
-			    $attributes[] = 'sent_time';
-			} else {
-			    $success = false;
-			}
+				$attributes = ['attempts', 'last_attempt_time'];
+				if ($this->send($message)) {
+					$item->sent_time = new \yii\db\Expression('NOW()');
+					$attributes[] = 'sent_time';
+				} else {
+					$success = false;
+				}
 
-			$item->attempts++;
-			$item->last_attempt_time = new \yii\db\Expression('NOW()');
+				$item->attempts++;
+				$item->last_attempt_time = new \yii\db\Expression('NOW()');
 
-			$item->updateAttributes($attributes);
+				$item->updateAttributes($attributes);
 		    }
 		}
 	

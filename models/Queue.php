@@ -1,11 +1,11 @@
 <?php
 
-namespace nterms\mailqueue\models;
+namespace atsys\mailqueue\models;
 
 use Yii;
 use yii\db\ActiveRecord;
-use nterms\mailqueue\MailQueue;
-use nterms\mailqueue\Message;
+use atsys\mailqueue\MailQueue;
+use atsys\mailqueue\Message;
 
 /**
  * This is the model class for table "{{%mail_queue}}".
@@ -16,7 +16,7 @@ use nterms\mailqueue\Message;
  * @property integer $last_attempt_time
  * @property integer $sent_time
  * @property string $time_to_send
- * @property string $swift_message
+ * @property string $mailer_message
  */
 class Queue extends ActiveRecord
 {
@@ -52,13 +52,13 @@ class Queue extends ActiveRecord
     {
         return [
             [['created_at', 'attempts', 'last_attempt_time', 'sent_time'], 'integer'],
-            [['time_to_send', 'swift_message'], 'required'],
+            [['time_to_send', 'mailer_message'], 'required'],
             [['subject'], 'safe'],
         ];
     }
 
 	public function toMessage()
 	{
-		return unserialize(base64_decode($this->swift_message));
+		return unserialize(base64_decode($this->mailer_message));
 	}
 }

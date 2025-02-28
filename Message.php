@@ -53,6 +53,10 @@ class Message extends \yii\symfonymailer\Message
         $item->time_to_send = date('Y-m-d H:i:s', $time_to_send);
         $item->mailer_message = base64_encode(serialize($this));
 
-        return $item->save();
+        if(!$item->save()) {
+            throw new \yii\base\InvalidConfigException($item->getErrors());
+        } else {
+            return true;
+        }
     }
 }

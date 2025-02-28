@@ -34,7 +34,6 @@ return [
     'components' => [
         'mailqueue' => [
             'class' => 'atsyscorp\mailqueue\MailQueue',
-			'table' => '{{%mail_queue}}',
 			'mailsPerRound' => 10,
 			'maxAttempts' => 3,
         ],
@@ -44,7 +43,6 @@ return [
 
 Following properties are available for customizing the mail queue behavior.
 
-- `table`: Name of the database table to store emails added to the queue.
 - `mailsPerRound`: Number of emails to send at a time.
 - `maxAttempts`: Maximum number of sending attempts per email.
 
@@ -61,7 +59,6 @@ return [
     'components' => [
         'mailqueue' => [
             'class' => 'atsyscorp\mailqueue\MailQueue',
-			'table' => '{{%mail_queue}}',
         ],
     ],
 ];

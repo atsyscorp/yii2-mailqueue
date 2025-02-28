@@ -7,7 +7,7 @@ use atsyscorp\mailqueue\MailQueue;
 /**
  * Initializes the db table for MailQueue
  */
-class m20250227_195635_mailqueue_init extends Migration
+class m250227_195630_mailqueue_init extends Migration
 {
 
 	const TABLE = '{{%mail_queue}}';

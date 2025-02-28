@@ -3,7 +3,7 @@
 use yii\db\Migration;
 use atsyscorp\mailqueue\MailQueue;
 
-class m20250227_195635_add_timetosend_column extends Migration
+class m250227_195632_add_timetosend_column extends Migration
 {
     const TABLE = '{{%mail_queue}}';
 

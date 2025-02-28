@@ -4,7 +4,7 @@ use yii\db\Schema;
 use yii\db\Migration;
 use atsyscorp\mailqueue\MailQueue;
 
-class m20250227_195635_alter_text_fields extends Migration {
+class m250227_195635_alter_text_fields extends Migration {
 
     const TABLE = '{{%mail_queue}}';
     

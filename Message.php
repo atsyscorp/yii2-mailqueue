@@ -48,13 +48,13 @@ class Message extends \yii\symfonymailer\Message
         $item->text_body = $textBody;
         $item->html_body = $htmlBody;
         $item->charset = 'UTF-8';
-        $item->created_at = date('Y-m-d H:i:s');
+        $item->created_at = time();
         $item->attempts = 0;
         $item->time_to_send = date('Y-m-d H:i:s', $time_to_send);
         $item->mailer_message = base64_encode(serialize($this));
 
         if(!$item->save()) {
-            throw new \yii\base\InvalidConfigException($item->getErrors());
+            throw new \yii\base\InvalidConfigException( json_encode($item->getErrors()) );
         } else {
             return true;
         }

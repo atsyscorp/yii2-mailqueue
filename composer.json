@@ -4,7 +4,7 @@
 	"keywords": ["yii2", "extension", "component", "email", "queue", "symfonymailer", "yii2-symfonymailer"],
 	"homepage": "https://github.com/atsyscorpcorp/yii2-mailqueue",
 	"type": "yii2-extension",
-	"version": "1.0.5-beta",
+	"version": "1.0.6-beta",
 	"license": "MIT",
 	"authors": [
 		{
@@ -15,7 +15,7 @@
 	],
 	"require": {
 		"yiisoft/yii2": "*",
-		"yiisoft/yii2-symfonymailer": "~2.0.0"
+		"yiisoft/yii2-symfonymailer": ">2.0.0"
 	},
 	"require-dev": {
         "phpunit/phpunit": "^9.0"

@@ -123,7 +123,6 @@ return [
     'components' => [
         'mailqueue' => [
             'class' => 'atsyscorp\mailqueue\MailQueue',
-			'table' => '{{%mail_queue}}',
 			'mailsPerRound' => 10,
 			'maxAttempts' => 3,
 			'transport' => [

@@ -8,12 +8,13 @@ use atsyscorp\mailqueue\MailQueue;
  */
 class m161111_080914_add_mailer_message_column_to_mail_queue_table extends Migration
 {
+    const TABLE = '{{%mail_queue}}';
     /**
      * @inheritdoc
      */
     public function up()
     {
-        $this->addColumn(Yii::$app->get(MailQueue::NAME)->table, 'mailer_message', 'text');
+        $this->addColumn(self::TABLE, 'mailer_message', 'text');
     }
 
     /**
@@ -21,6 +22,6 @@ class m161111_080914_add_mailer_message_column_to_mail_queue_table extends Migra
      */
     public function down()
     {
-        $this->dropColumn(Yii::$app->get(MailQueue::NAME)->table, 'mailer_message');
+        $this->dropColumn(self::TABLE, 'mailer_message');
     }
 }

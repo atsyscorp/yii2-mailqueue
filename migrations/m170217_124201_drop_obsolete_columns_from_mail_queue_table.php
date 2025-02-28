@@ -8,19 +8,21 @@ use atsyscorp\mailqueue\MailQueue;
  */
 class m170217_124201_drop_obsolete_columns_from_mail_queue_table extends Migration
 {
+
+    const TABLE = '{{%mail_queue}}';
     /**
      * @inheritdoc
      */
     public function up()
     {
-        $this->dropColumn(Yii::$app->get(MailQueue::NAME)->table, 'from');
-		$this->dropColumn(Yii::$app->get(MailQueue::NAME)->table, 'to');
-		$this->dropColumn(Yii::$app->get(MailQueue::NAME)->table, 'cc');
-		$this->dropColumn(Yii::$app->get(MailQueue::NAME)->table, 'bcc');
-		$this->dropColumn(Yii::$app->get(MailQueue::NAME)->table, 'html_body');
-		$this->dropColumn(Yii::$app->get(MailQueue::NAME)->table, 'text_body');
-		$this->dropColumn(Yii::$app->get(MailQueue::NAME)->table, 'reply_to');
-		$this->dropColumn(Yii::$app->get(MailQueue::NAME)->table, 'charset');
+        $this->dropColumn(self::TABLE, 'from');
+		$this->dropColumn(self::TABLE, 'to');
+		$this->dropColumn(self::TABLE, 'cc');
+		$this->dropColumn(self::TABLE, 'bcc');
+		$this->dropColumn(self::TABLE, 'html_body');
+		$this->dropColumn(self::TABLE, 'text_body');
+		$this->dropColumn(self::TABLE, 'reply_to');
+		$this->dropColumn(self::TABLE, 'charset');
     }
 
     /**
@@ -28,13 +30,13 @@ class m170217_124201_drop_obsolete_columns_from_mail_queue_table extends Migrati
      */
     public function down()
     {
-        $this->addColumn(Yii::$app->get(MailQueue::NAME)->table, 'from', 'text');
-		$this->addColumn(Yii::$app->get(MailQueue::NAME)->table, 'to', 'text');
-		$this->addColumn(Yii::$app->get(MailQueue::NAME)->table, 'cc', 'text');
-		$this->addColumn(Yii::$app->get(MailQueue::NAME)->table, 'bcc', 'text');
-		$this->addColumn(Yii::$app->get(MailQueue::NAME)->table, 'html_body', 'text');
-		$this->addColumn(Yii::$app->get(MailQueue::NAME)->table, 'text_body', 'text');
-		$this->addColumn(Yii::$app->get(MailQueue::NAME)->table, 'reply_to', 'text');
-		$this->addColumn(Yii::$app->get(MailQueue::NAME)->table, 'charset', 'string');
+        $this->addColumn(self::TABLE, 'from', 'text');
+		$this->addColumn(self::TABLE, 'to', 'text');
+		$this->addColumn(self::TABLE, 'cc', 'text');
+		$this->addColumn(self::TABLE, 'bcc', 'text');
+		$this->addColumn(self::TABLE, 'html_body', 'text');
+		$this->addColumn(self::TABLE, 'text_body', 'text');
+		$this->addColumn(self::TABLE, 'reply_to', 'text');
+		$this->addColumn(self::TABLE, 'charset', 'string');
     }
 }

@@ -9,14 +9,17 @@ use atsyscorp\mailqueue\MailQueue;
  */
 class m150302_051519_mailqueue_init extends Migration
 {
+
+	const TABLE = '{{%mail_queue}}';
+
     public function up()
     {
 		$tableOptions = null;
 		if ($this->db->driverName === 'mysql') {
 			$tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
 		}
-		
-		$this->createTable(Yii::$app->get(MailQueue::NAME)->table, [
+
+		$this->createTable(self::TABLE, [
 			'id' => Schema::TYPE_PK,
 			'from' => Schema::TYPE_TEXT,
 			'to' => Schema::TYPE_TEXT,
@@ -36,6 +39,6 @@ class m150302_051519_mailqueue_init extends Migration
 
     public function down()
     {
-        $this->dropTable(Yii::$app->get(MailQueue::NAME)->table);
+        $this->dropTable(self::TABLE);
     }
 }

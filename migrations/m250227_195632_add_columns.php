@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m20250227_195632_add_columns extends Migration
+class m250227_195632_add_columns extends Migration
 {
     const TABLE = '{{%mail_queue}}';
     const INDEX_TIME_TO_SEND = 'IX_time_to_send';

@@ -25,11 +25,11 @@ class Message extends \yii\symfonymailer\Message
             $time_to_send = time();
         }
 
-        $from = $this->getFrom() ? $this->getFrom()[0]->getAddress() : null;
-        $to = $this->getTo() ? $this->getTo()[0]->getAddress() : null;
-        $cc = $this->getCc() ? $this->getCc()[0]->getAddress() : null;
-        $bcc = $this->getBcc() ? $this->getBcc()[0]->getAddress() : null;
-        $replyTo = $this->getReplyTo() ? $this->getReplyTo()[0]->getAddress() : null;
+        $from = $this->getFrom() ? array_keys($this->getFrom())[0] : null;
+        $to = $this->getTo() ? array_keys($this->getTo())[0] : null;
+        $cc = $this->getCc() ? array_keys($this->getCc())[0] : null;
+        $bcc = $this->getBcc() ? array_keys($this->getBcc())[0] : null;
+        $replyTo = $this->getReplyTo() ? array_keys($this->getReplyTo())[0] : null;
         $subject = $this->getSubject();
         $textBody = $this->getTextBody();
         $htmlBody = $this->getHtmlBody();

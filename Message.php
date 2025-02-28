@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Message.php
- * @author ATSYS https://atsyscorp.co
- */
-
 namespace atsyscorp\mailqueue;
 
 use Yii;
@@ -25,16 +20,37 @@ class Message extends \yii\symfonymailer\Message
      */
     public function queue($time_to_send = 'now')
     {
-        if($time_to_send == 'now') {
+        if ($time_to_send == 'now') {
             $time_to_send = time();
         }
 
-        $item = new Queue();
-        $item->subject          = $this->getSubject();
-        $item->attempts         = 0;
-        $item->mailer_message   = base64_encode(serialize($this));
-        $item->time_to_send     = date('Y-m-d H:i:s', $time_to_send);
+        // Obtener los datos del correo
+        $from = $this->getFrom()[0]->getAddress(); // Remitente
+        $to = $this->getTo()[0]->getAddress(); // Destinatario
+        $cc = $this->getCc() ? $this->getCc()[0]->getAddress() : null; // Copia carbón (si existe)
+        $bcc = $this->getBcc() ? $this->getBcc()[0]->getAddress() : null; // Copia carbón oculta (si existe)
+        $replyTo = $this->getReplyTo() ? $this->getReplyTo()[0]->getAddress() : null; // Dirección de respuesta (si existe)
+        $subject = $this->getSubject(); // Asunto
+        $textBody = $this->getTextBody(); // Cuerpo en texto plano
+        $htmlBody = $this->getHtmlBody(); // Cuerpo en HTML
 
+        // Crear un nuevo registro en la cola de correos
+        $item = new Queue();
+        $item->from = $from;
+        $item->to = $to;
+        $item->cc = $cc;
+        $item->bcc = $bcc;
+        $item->reply_to = $replyTo;
+        $item->subject = $subject;
+        $item->text_body = $textBody;
+        $item->html_body = $htmlBody;
+        $item->charset = 'UTF-8'; // Juego de caracteres
+        $item->created_at = date('Y-m-d H:i:s'); // Fecha de creación
+        $item->attempts = 0; // Número de intentos
+        $item->time_to_send = date('Y-m-d H:i:s', $time_to_send); // Momento de envío
+        $item->mailer_message = base64_encode(serialize($this)); // Serializar el objeto Message
+
+        // Guardar el registro
         return $item->save();
     }
 }

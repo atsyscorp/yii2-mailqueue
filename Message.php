@@ -16,7 +16,7 @@ class Message extends \yii\symfonymailer\Message
     public function __sleep()
     {
         // Devuelve solo las propiedades que existen y deseas serializar
-        return ['from', 'to', 'cc', 'bcc', 'replyTo', 'subject', 'textBody', 'htmlBody'];
+        return ['from', 'to', 'cc', 'bcc', 'subject', 'textBody', 'htmlBody'];
     }
 
     /**

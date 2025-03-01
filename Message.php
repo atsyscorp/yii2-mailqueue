@@ -12,6 +12,13 @@ use atsyscorp\mailqueue\models\Queue;
  */
 class Message extends \yii\symfonymailer\Message implements \Serializable
 {
+
+    public function __sleep()
+    {
+        // Devuelve un array vacío para evitar el error
+        return [];
+    }
+
     public function serialize()
     {
         // Serializa manualmente las propiedades que necesitas

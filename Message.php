@@ -12,12 +12,19 @@ use atsyscorp\mailqueue\models\Queue;
  */
 class Message extends \yii\symfonymailer\Message
 {
+
+    public function __sleep()
+    {
+        // Devuelve solo las propiedades que existen y deseas serializar
+        return ['from', 'to', 'cc', 'bcc', 'replyTo', 'subject', 'textBody', 'htmlBody'];
+    }
+
     /**
      * Enqueue the message storing it in database.
      *
      * @param timestamp $time_to_send
      * @return boolean true on success, false otherwise
-     * @throws \yii\base\InvalidConfigException Fields "from" or "to" if are undefined.
+     * @throws \yii\base\InvalidConfigException Fields "from" or "to" if are required.
      */
     public function queue($time_to_send = 'now')
     {

@@ -4,6 +4,7 @@ namespace atsyscorp\mailqueue;
 
 use Yii;
 use atsyscorp\mailqueue\models\Queue;
+use Symfony\Component\Mime\Email;
 
 /**
  * Extends `yii\symfonymailer\Message` to enable queuing.
@@ -12,24 +13,42 @@ use atsyscorp\mailqueue\models\Queue;
  */
 class Message extends \yii\symfonymailer\Message implements \Serializable
 {
+    protected $htmlBody;
+    protected $textBody;
+
+    public $email;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->email = $this->getSymfonyEmail();
+    }
 
     public function serialize()
     {
-        // Serializa manualmente las propiedades que necesitas
+
+        //print_r($this); die;
+        $_textBody = '';
+        $_htmlBody = '';
+        if($this->email) {
+            $_textBody = $this->email->getTextBody();
+            $_htmlBody = $this->email->getHtmlBody();
+        }
+
         return serialize([
             'from' => $this->getFrom(),
             'to' => $this->getTo(),
             'cc' => $this->getCc(),
             'bcc' => $this->getBcc(),
             'subject' => $this->getSubject(),
-            'textBody' => method_exists($this, 'getTextBody') ? $this->getTextBody() : null,
-            'htmlBody' => method_exists($this, 'getHtmlBody') ? $this->getHtmlBody() : null,
+            'textBody' => $_textBody,
+            'htmlBody' => $_htmlBody,
+            'charset' => $this->getCharset(),
         ]);
     }
 
     public function unserialize($data)
     {
-        // Deserializa manualmente las propiedades
         $data = unserialize($data);
         $this->setFrom($data['from']);
         $this->setTo($data['to']);
@@ -38,6 +57,7 @@ class Message extends \yii\symfonymailer\Message implements \Serializable
         $this->setSubject($data['subject']);
         $this->setTextBody($data['textBody']);
         $this->setHtmlBody($data['htmlBody']);
+        $this->setCharset($data['charset']);
     }
 
     /**
@@ -49,28 +69,31 @@ class Message extends \yii\symfonymailer\Message implements \Serializable
      */
     public function queue($time_to_send = 'now')
     {
+
         if ($time_to_send == 'now') {
             $time_to_send = time();
         }
 
-        // Obtener las direcciones de correo
+        // Get all email addresses
         $from = $this->getFrom() ? key($this->getFrom()) : null;
         $to = $this->getTo() ? key($this->getTo()) : null;
         $cc = $this->getCc() ? key($this->getCc()) : null;
         $bcc = $this->getBcc() ? key($this->getBcc()) : null;
         $replyTo = $this->getReplyTo() ? key($this->getReplyTo()) : null;
 
-        // Obtener el asunto y los cuerpos del correo
-        $subject = $this->getSubject();
-        $textBody = method_exists($this, 'getTextBody') ? $this->getTextBody() : null;
-        $htmlBody = method_exists($this, 'getHtmlBody') ? $this->getHtmlBody() : null;
 
-        // Validar campos obligatorios
+
+        // Get subject and HTML & text body
+        $subject = $this->getSubject();
+        $textBody = $this->email->getTextBody();
+        $htmlBody = $this->email->getHtmlBody();
+
+        // Check required fields
         if (empty($from) || empty($to)) {
             throw new \yii\base\InvalidConfigException('Fields "from" and "to" are required.');
         }
 
-        // Crear un nuevo registro en la cola de correos
+        // Insert to queue table
         $item = new Queue();
         $item->from = $from;
         $item->to = $to;
@@ -81,11 +104,12 @@ class Message extends \yii\symfonymailer\Message implements \Serializable
         $item->text_body = $textBody;
         $item->html_body = $htmlBody;
         $item->charset = 'UTF-8';
+        $item->created_at = date('Y-m-d H:i:s');
         $item->attempts = 0;
         $item->time_to_send = date('Y-m-d H:i:s', $time_to_send);
         $item->mailer_message = base64_encode(serialize($this));
 
-        // Guardar el registro
+        // Save record
         if (!$item->save()) {
             throw new \yii\base\InvalidConfigException(json_encode($item->getErrors()));
         } else {

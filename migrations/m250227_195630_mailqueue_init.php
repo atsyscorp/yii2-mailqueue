@@ -27,7 +27,7 @@ class m250227_195630_mailqueue_init extends Migration
             'text_body' => $this->text(),
             'reply_to' => $this->text(),
             'charset' => $this->string(),
-            'created_at' => $this->dateTime()->notNull(),
+            'created_at' => $this->dateTime()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
             'attempts' => $this->integer(),
             'last_attempt_time' => $this->dateTime()->defaultValue(null),
             'sent_time' => $this->dateTime()->defaultValue(null),

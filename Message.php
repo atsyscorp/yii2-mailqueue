@@ -13,12 +13,6 @@ use atsyscorp\mailqueue\models\Queue;
 class Message extends \yii\symfonymailer\Message implements \Serializable
 {
 
-    public function __sleep()
-    {
-        // Devuelve un array vacío para evitar el error
-        return [];
-    }
-
     public function serialize()
     {
         // Serializa manualmente las propiedades que necesitas
@@ -28,8 +22,8 @@ class Message extends \yii\symfonymailer\Message implements \Serializable
             'cc' => $this->getCc(),
             'bcc' => $this->getBcc(),
             'subject' => $this->getSubject(),
-            'textBody' => $this->getTextBody(),
-            'htmlBody' => $this->getHtmlBody(),
+            'textBody' => method_exists($this, 'getTextBody') ? $this->getTextBody() : null,
+            'htmlBody' => method_exists($this, 'getHtmlBody') ? $this->getHtmlBody() : null,
         ]);
     }
 
@@ -60,11 +54,11 @@ class Message extends \yii\symfonymailer\Message implements \Serializable
         }
 
         // Obtener las direcciones de correo
-        $from = $this->getFrom() ? $this->getFrom()[0]->getAddress() : null;
-        $to = $this->getTo() ? $this->getTo()[0]->getAddress() : null;
-        $cc = $this->getCc() ? $this->getCc()[0]->getAddress() : null;
-        $bcc = $this->getBcc() ? $this->getBcc()[0]->getAddress() : null;
-        $replyTo = $this->getReplyTo() ? $this->getReplyTo()[0]->getAddress() : null;
+        $from = $this->getFrom() ? key($this->getFrom()) : null;
+        $to = $this->getTo() ? key($this->getTo()) : null;
+        $cc = $this->getCc() ? key($this->getCc()) : null;
+        $bcc = $this->getBcc() ? key($this->getBcc()) : null;
+        $replyTo = $this->getReplyTo() ? key($this->getReplyTo()) : null;
 
         // Obtener el asunto y los cuerpos del correo
         $subject = $this->getSubject();
@@ -87,7 +81,6 @@ class Message extends \yii\symfonymailer\Message implements \Serializable
         $item->text_body = $textBody;
         $item->html_body = $htmlBody;
         $item->charset = 'UTF-8';
-        $item->created_at = date('Y-m-d H:i:s');
         $item->attempts = 0;
         $item->time_to_send = date('Y-m-d H:i:s', $time_to_send);
         $item->mailer_message = base64_encode(serialize($this));

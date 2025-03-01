@@ -31,8 +31,8 @@ class Message extends \yii\symfonymailer\Message
         $bcc = $this->getBcc() ? array_keys($this->getBcc())[0] : null;
         $replyTo = $this->getReplyTo() ? array_keys($this->getReplyTo())[0] : null;
         $subject = $this->getSubject();
-        $textBody = $this->getTextBody();
-        $htmlBody = $this->getHtmlBody();
+        $textBody = method_exists($this, 'getTextBody') ? $this->getTextBody() : null;
+        $htmlBody = method_exists($this, 'getHtmlBody') ? $this->getHtmlBody() : null;
 
         if (empty($from) || empty($to)) {
             throw new \yii\base\InvalidConfigException('Los campos "from" y "to" son obligatorios.');

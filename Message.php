@@ -35,7 +35,7 @@ class Message extends \yii\symfonymailer\Message
         $htmlBody = method_exists($this, 'getHtmlBody') ? $this->getHtmlBody() : null;
 
         if (empty($from) || empty($to)) {
-            throw new \yii\base\InvalidConfigException('Los campos "from" y "to" son obligatorios.');
+            throw new \yii\base\InvalidConfigException('Fields "from" and "to" are required.');
         }
 
         $item = new Queue();

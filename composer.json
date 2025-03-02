@@ -4,7 +4,7 @@
 	"keywords": ["yii2", "extension", "component", "email", "queue", "symfonymailer", "yii2-symfonymailer"],
 	"homepage": "https://github.com/atsyscorpcorp/yii2-mailqueue",
 	"type": "yii2-extension",
-	"version": "1.0.8",
+	"version": "1.0.9",
 	"license": "MIT",
 	"authors": [
 		{

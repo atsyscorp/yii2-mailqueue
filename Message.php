@@ -16,7 +16,10 @@ class Message extends \yii\symfonymailer\Message
     protected $htmlBody;
     protected $textBody;
     public $symfonyEmail;
-    private Email $email;
+    /**
+     * @var \Symfony\Component\Mime\Email
+     */
+    public $email;
 
     public function __construct($config = [])
     {
@@ -46,7 +49,6 @@ class Message extends \yii\symfonymailer\Message
 
     public function __unserialize(array $data): void
     {
-        // FORZAR REINICIALIZACIÓN DEL OBJETO
         $this->email = new \Symfony\Component\Mime\Email();
 
         Yii::debug('Email object initialized: ' . get_class($this->email), __METHOD__);
@@ -71,6 +73,13 @@ class Message extends \yii\symfonymailer\Message
             } catch (\Throwable $e) {
                 Yii::error('Error setting "from": ' . $e->getMessage(), __METHOD__);
             }
+        }
+    }
+
+    public function __wakeup():void 
+    {
+        if(!isset($this->email)) {
+            $this->email = new Email();
         }
     }
 

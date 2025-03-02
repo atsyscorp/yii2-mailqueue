@@ -7,6 +7,7 @@
 namespace atsyscorp\mailqueue\commands;
 
 use yii\console\Controller;
+use atsyscorp\mailqueue\MailQueue;
 
 /**
  * This command processes the mail queue

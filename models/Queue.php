@@ -4,8 +4,6 @@ namespace atsyscorp\mailqueue\models;
 
 use Yii;
 use yii\db\ActiveRecord;
-use atsyscorp\mailqueue\MailQueue;
-use atsyscorp\mailqueue\Message;
 
 /**
  * This is the model class for table "{{%mail_queue}}".
@@ -25,7 +23,7 @@ class Queue extends ActiveRecord
      */
     public static function tableName()
     {
-        return Yii::$app->get(MailQueue::NAME)->table;
+        return '{{%mail_queue}}';
     }
 
     /**

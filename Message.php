@@ -21,12 +21,12 @@ class Message extends \yii\symfonymailer\Message implements \Serializable
     public function __construct()
     {
         parent::__construct();
-        $this->email = $this->getSymfonyEmail();
     }
 
     public function serialize()
     {
 
+        $this->email = $this->getSymfonyEmail();
         //print_r($this); die;
         $_textBody = '';
         $_htmlBody = '';
@@ -50,14 +50,16 @@ class Message extends \yii\symfonymailer\Message implements \Serializable
     public function unserialize($data)
     {
         $data = unserialize($data);
-        $this->setFrom($data['from']);
-        $this->setTo($data['to']);
-        $this->setCc($data['cc']);
-        $this->setBcc($data['bcc']);
-        $this->setSubject($data['subject']);
-        $this->setTextBody($data['textBody']);
-        $this->setHtmlBody($data['htmlBody']);
-        $this->setCharset($data['charset']);
+        if($data) {
+            $this->setFrom($data['from']);
+            $this->setTo($data['to']);
+            $this->setCc($data['cc']);
+            $this->setBcc($data['bcc']);
+            $this->setSubject($data['subject']);
+            $this->setTextBody($data['textBody']);
+            $this->setHtmlBody($data['htmlBody']);
+            $this->setCharset($data['charset']);
+        }
     }
 
     /**
@@ -70,6 +72,8 @@ class Message extends \yii\symfonymailer\Message implements \Serializable
     public function queue($time_to_send = 'now')
     {
 
+        $this->email = $this->getSymfonyEmail();
+
         if ($time_to_send == 'now') {
             $time_to_send = time();
         }
@@ -80,8 +84,6 @@ class Message extends \yii\symfonymailer\Message implements \Serializable
         $cc = $this->getCc() ? key($this->getCc()) : null;
         $bcc = $this->getBcc() ? key($this->getBcc()) : null;
         $replyTo = $this->getReplyTo() ? key($this->getReplyTo()) : null;
-
-
 
         // Get subject and HTML & text body
         $subject = $this->getSubject();

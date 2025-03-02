@@ -11,54 +11,66 @@ use Symfony\Component\Mime\Email;
  *
  * @see https://www.yiiframework.com/extension/yiisoft/yii2-symfonymailer
  */
-class Message extends \yii\symfonymailer\Message implements \Serializable
+class Message extends \yii\symfonymailer\Message
 {
     protected $htmlBody;
     protected $textBody;
+    public $symfonyEmail;
+    private Email $email;
 
-    public $email;
-
-    public function __construct()
+    public function __construct($config = [])
     {
-        parent::__construct();
+        $this->email = new Email();
+        parent::__construct($config);
     }
 
-    public function serialize()
+    public function __sleep(): array
     {
+        return ['email', 'charset'];
+    }
 
-        $this->email = $this->getSymfonyEmail();
-        //print_r($this); die;
-        $_textBody = '';
-        $_htmlBody = '';
-        if($this->email) {
-            $_textBody = $this->email->getTextBody();
-            $_htmlBody = $this->email->getHtmlBody();
-        }
-
-        return serialize([
+    public function __serialize(): array
+    {
+        $this->symfonyEmail = $this->getSymfonyEmail();
+        return [
             'from' => $this->getFrom(),
             'to' => $this->getTo(),
             'cc' => $this->getCc(),
             'bcc' => $this->getBcc(),
             'subject' => $this->getSubject(),
-            'textBody' => $_textBody,
-            'htmlBody' => $_htmlBody,
+            'textBody' => $this->symfonyEmail ? $this->symfonyEmail->getTextBody() : '',
+            'htmlBody' => $this->symfonyEmail ? $this->symfonyEmail->getHtmlBody() : '',
             'charset' => $this->getCharset(),
-        ]);
+        ];
     }
 
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $data = unserialize($data);
-        if($data) {
-            $this->setFrom($data['from']);
-            $this->setTo($data['to']);
-            $this->setCc($data['cc']);
-            $this->setBcc($data['bcc']);
-            $this->setSubject($data['subject']);
-            $this->setTextBody($data['textBody']);
-            $this->setHtmlBody($data['htmlBody']);
-            $this->setCharset($data['charset']);
+        // FORZAR REINICIALIZACIÓN DEL OBJETO
+        $this->email = new \Symfony\Component\Mime\Email();
+
+        Yii::debug('Email object initialized: ' . get_class($this->email), __METHOD__);
+
+        if (!empty($data['subject'])) {
+            Yii::debug('Setting subject: ' . $data['subject'], __METHOD__);
+            $this->email->subject((string) $data['subject']);
+        }
+
+        if (!empty($data['textBody'])) {
+            $this->email->text((string) $data['textBody']);
+        }
+
+        if (!empty($data['htmlBody'])) {
+            $this->email->html((string) $data['htmlBody']);
+        }
+
+        if (isset($data['from'])) {
+            Yii::debug('Setting from: ' . json_encode($data['from']), __METHOD__);
+            try {
+                $this->setFrom($data['from']);
+            } catch (\Throwable $e) {
+                Yii::error('Error setting "from": ' . $e->getMessage(), __METHOD__);
+            }
         }
     }
 
@@ -72,7 +84,7 @@ class Message extends \yii\symfonymailer\Message implements \Serializable
     public function queue($time_to_send = 'now')
     {
 
-        $this->email = $this->getSymfonyEmail();
+        $this->symfonyEmail = $this->getSymfonyEmail();
 
         if ($time_to_send == 'now') {
             $time_to_send = time();
@@ -87,8 +99,8 @@ class Message extends \yii\symfonymailer\Message implements \Serializable
 
         // Get subject and HTML & text body
         $subject = $this->getSubject();
-        $textBody = $this->email->getTextBody();
-        $htmlBody = $this->email->getHtmlBody();
+        $textBody = $this->symfonyEmail->getTextBody();
+        $htmlBody = $this->symfonyEmail->getHtmlBody();
 
         // Check required fields
         if (empty($from) || empty($to)) {

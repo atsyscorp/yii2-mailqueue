@@ -4,6 +4,8 @@ namespace atsyscorp\mailqueue\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use Symfony\Component\Mime\Email;
+use yii\symfonymailer\Message;
 
 /**
  * This is the model class for table "{{%mail_queue}}".
@@ -56,7 +58,20 @@ class Queue extends ActiveRecord
     }
 
 	public function toMessage()
-	{
-		return unserialize(base64_decode($this->mailer_message));
-	}
+    {
+        $message = unserialize(base64_decode($this->mailer_message));
+
+        // Si no es una instancia de Message, error
+        if (!$message instanceof Message) {
+            throw new \RuntimeException("El mensaje deserializado no es una instancia válida de Message");
+        }
+
+        // Asegurar que $email esté inicializado
+        if (!isset($message->email) || !$message->email instanceof Email) {
+            $message->email = new Email();
+        }
+
+        return $message;
+    }
+
 }
